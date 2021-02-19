@@ -14,8 +14,7 @@ GD ライブラリが必要です
 apt-get install php7.0-gd
 ```
 
-ライブラリをロードします<br>
-GD ライブラリが必要です
+jumppuls_downloader をロードします<br>
 
 ```php
 include('jumppuls_downloader.php');
