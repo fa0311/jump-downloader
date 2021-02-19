@@ -23,6 +23,7 @@ include('jumppuls_downloader.php');
 # use
 
 ```php
+$instance = new jumppuls_downloader();
 $instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true,1); //URL 次の話をダウンロードするか 遅延(sec)
 ```
 
