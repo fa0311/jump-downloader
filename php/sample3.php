@@ -1,13 +1,13 @@
 <?php
 /*応用編*/
 set_time_limit(0);
-include('lib/jumppuls_downloader.php');
+include('lib/jumpplus_downloader.php');
 /*1ページ目だけをダウンロードする */
 download("https://shonenjumpplus.com/episode/10833519556325021865");
 
 function download($url)
 {
-    $instance = new jumppuls_downloader();
+    $instance = new jumpplus_downloader();
     $instance->json_download($url);
     if (!file_exists("output")) {
         mkdir("output", 0755);
