@@ -1,6 +1,6 @@
 <?php
 set_time_limit(0);
-include('jumppuls_downloader.php');
+include('lib/jumppuls_downloader.php');
 $instance = new jumppuls_downloader();
 
 /* json形式の情報をダウンロードしてlistにjsonデコード */
