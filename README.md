@@ -1,62 +1,55 @@
 # jumpplus_downloader
 
-ジャンププラスダウンローダー<br>
+[日本語](./README_JA.md)
 
-# 注意
+## About
 
-このレポジトリは不正ダウンロードを推進するものではありません<br>
-インターネット環境の都合でジャンププラスのマンガが読めない方など向けプログラムです<br>
-マンガをアーカイブしたり第三者に公開、アップロードする行為は遠慮してください<br>
+For Educational Purposes Only.  
+Made on intent to read without depending on the Internet environment.  
+Please DO NOT archive the manga or publish it to a third party, upload.
 
 # PHP
 
-GD ライブラリが必要です
+## Installation
 
-```ubuntu
-apt-get install php7.0-gd
+```console
+# need GD library to run.
+$ apt-get install php7.0-gd
 ```
 
-jumpplus_downloader をロードします<br>
+## Using
 
 ```php
-include('jumpplus_downloader.php');
-```
+include('lib/jumpplus_downloader.php');
 
-```php
 $instance = new jumpplus_downloader();
-$instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true,1); //URL 次の話をダウンロードするか 遅延(sec)
+$instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true, 1); //URL, Download next episode, Delay(sec)
 ```
 
 # Python
 
-There are more dependencies in the Python version. The following is a list.  
-•PIL : convert images.  
-•requests : Download images.  
-•BytesIO : convert images.  
-•img2pdf : pdf conversion.
+## Installation
 
-## You can install these libraries using following commands.
+```console
+$ git clone https://github.com/fa0311/jumpplus-downloader.git
 
-```bash
-sudo pip3 install img2pdf requests pillow
+$ cd jumpplus-downloader/py
+
+$ sudo pip3 install -r requirements.txt
 ```
 
-If you got an error to install, Please use this command instead.
-
-```bash
-sudo apt install python3-img2pdf python3-pillow python3-requests
+```console
+# If you got an error to install, please use this command instead.
+$ sudo apt install python3-img2pdf python3-requests
 ```
 
-<br>
-Load jumpplus_downloader and Create an instance.
+## Using
 
 ```python
-from jumpplus_downloader import  jumpplus_downloader
-jumpplus_downloader=jumpplus_downloader()
-```
+from lib.jumpplus_downloader import jumpplus_downloader
 
-```python
-jumpplus_downloader.auto_list_download(url="https://shonenjumpplus.com/episode/10833519556325021865",sleeptime=20,next=True,pdfConversion=True)
+jpd = jumpplus_downloader()
+jpd.auto_list_download(url="https://shonenjumpplus.com/episode/10833519556325021865", sleeptime=20, next=True, pdfConversion=True)
 ```
 
 # License
