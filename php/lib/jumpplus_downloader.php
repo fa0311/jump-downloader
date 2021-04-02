@@ -1,6 +1,6 @@
 <?php
 
-class jumppuls_downloader
+class jumpplus_downloader
 {
     public function __construct()
     {
