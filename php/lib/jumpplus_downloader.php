@@ -1,5 +1,10 @@
 <?php
-
+/*
+メモ
+widthが760なら-6のずれ
+widthが764なら-7のずれ
+widthが822なら-5.5のずれ
+*/
 class jumppuls_downloader
 {
     public function __construct()
@@ -24,8 +29,7 @@ class jumppuls_downloader
             if ($page["type"] == "main") {
                 $this->h = $page["height"];
                 $this->w = $page["width"];
-                if ($page["width"] == 764)
-                    $this->w_marge = 7;
+                $this->w_marge = $page["width"] / 4 % 8; //%の後の数字、8の倍数であることは間違いないが詳しくは不明 データ不足
                 $this->download($page["src"]);
                 $this->processing();
                 $this->output("./" . $this->list["readableProduct"]["title"] . "/");

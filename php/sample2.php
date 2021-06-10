@@ -1,10 +1,10 @@
 <?php
 set_time_limit(0);
 include('lib/jumpplus_downloader.php');
-$instance = new jumpplus_downloader();
+$instance = new jumppuls_downloader();
 
 /* json形式の情報をダウンロードしてlistにjsonデコード */
-$instance->json_download("https://shonenjumpplus.com/episode/10833519556325021865");
+$instance->json_download("https://shonenjumpplus.com/episode/10834108156649530410");
 echo "\n";
 /*漫画のタイトル */
 echo $instance->list["readableProduct"]["title"];
@@ -13,13 +13,13 @@ echo "\n";
 echo $instance->list["readableProduct"]["nextReadableProductUri"];
 echo "\n";
 /*1ページ目のタイプ */
-echo $instance->list["readableProduct"]["pageStructure"]["pages"][0]["type"];
+echo $instance->list["readableProduct"]["pageStructure"]["pages"][2]["type"];
 echo "\n";
 /*1ページ目の画像の高さ */
-echo $instance->list["readableProduct"]["pageStructure"]["pages"][0]["height"];
+echo $instance->list["readableProduct"]["pageStructure"]["pages"][2]["height"];
 echo "\n";
 /*1ページ目の画像の幅 */
-echo $instance->list["readableProduct"]["pageStructure"]["pages"][0]["width"];
+echo $instance->list["readableProduct"]["pageStructure"]["pages"][2]["width"];
 echo "\n";
 /*1ページ目の画像URL */
-echo $instance->list["readableProduct"]["pageStructure"]["pages"][0]["src"];
+echo $instance->list["readableProduct"]["pageStructure"]["pages"][2]["src"];
