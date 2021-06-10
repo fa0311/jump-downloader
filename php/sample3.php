@@ -7,7 +7,7 @@ download("https://shonenjumpplus.com/episode/10833519556325021865");
 
 function download($url)
 {
-    $instance = new jumpplus_downloader();
+    $instance = new jumppuls_downloader();
     $instance->json_download($url);
     if (!file_exists("output")) {
         mkdir("output", 0755);
