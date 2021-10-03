@@ -1,7 +1,6 @@
 <?php
 /*応用編*/
 set_time_limit(0);
-date_default_timezone_set('Europe/London');
 include('lib/jumpplus_downloader.php');
 /*1ページ目だけをダウンロードする */
 
