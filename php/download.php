@@ -19,8 +19,10 @@ function download_all_count($url,$all = 0)
     if($instance->list["readableProduct"]["pageStructure"] !== null){
         $all += count($instance->list["readableProduct"]["pageStructure"]["pages"]);
     }
-    if ($instance->list["readableProduct"]["nextReadableProductUri"] != null) {
-        return download_all_count($instance->list["readableProduct"]["nextReadableProductUri"],$all);
+    $next = $instance->list["readableProduct"]["nextReadableProductUri"];
+    unset($instance);
+    if ($next != null) {
+        return download_all_count($next,$all);
     }
     return $all;
 }
@@ -57,8 +59,10 @@ class jumppuls
         }
         print("ダウンロード中です (" . $this->page . "/" . $this->all . " " . round($this->page / $this->all * 100, 3) . "%) 残り");
         print($this->s2h((time() - $this->time) / $this->page * ($this->all - $this->page)) . "\n");
-        if ($instance->list["readableProduct"]["nextReadableProductUri"] != null) {
-            $this->auto_list_download($instance->list["readableProduct"]["nextReadableProductUri"]);
+        $next = $instance->list["readableProduct"]["nextReadableProductUri"];
+        unset($instance);
+        if ($next != null) {
+            $this->auto_list_download($next);
         }
     }
     public function s2h($seconds) {
