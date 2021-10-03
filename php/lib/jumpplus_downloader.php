@@ -23,6 +23,9 @@ class jumppuls_downloader
         if (!file_exists($this->list["readableProduct"]["title"])) {
             mkdir($this->list["readableProduct"]["title"], 0755);
         }
+        if($this->list["readableProduct"]["pageStructure"] === null){
+            return;
+        }
         foreach ($this->list["readableProduct"]["pageStructure"]["pages"] as $i => $page) {
             sleep($sleep);
             $this->file = $i;
