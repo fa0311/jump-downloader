@@ -55,10 +55,17 @@ class jumppuls
                 $instance->output("./" . $instance->list["readableProduct"]["title"] . "/");
             }
         }
-        print("ダウンロード中です (" . $this->page . "/" . $this->all . ") 残り");
-        print(date('H時間i分s秒', (time() - $this->time) / $this->page * ($this->all - $this->page)) . "\n");
+        print("ダウンロード中です (" . $this->page . "/" . $this->all . " " . round($this->page / $this->all * 100, 3) . "%) 残り");
+        print($this->s2h((time() - $this->time) / $this->page * ($this->all - $this->page)) . "\n");
         if ($instance->list["readableProduct"]["nextReadableProductUri"] != null) {
             $this->auto_list_download($instance->list["readableProduct"]["nextReadableProductUri"]);
         }
+    }
+    public function s2h($seconds) {
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds / 60) % 60);
+        $seconds = $seconds % 60;
+        $hms = sprintf("%02d時間%02d分%02d秒", $hours, $minutes, $seconds);
+        return $hms;
     }
 }
