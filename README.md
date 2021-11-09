@@ -8,6 +8,15 @@ For Educational Purposes Only.
 Made on intent to read without depending on the Internet environment.  
 Please DO NOT archive the manga or publish it to a third party, upload.
 
+# cron
+
+This is a cron that deletes comics downloaded at 0:00:00.
+Be sure to register.
+
+```cron
+0 0 * * * cd php && sh delete.sh
+```
+
 # PHP
 
 ## Installation
