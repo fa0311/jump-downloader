@@ -5,6 +5,7 @@ import time
 from PIL import Image
 from io import BytesIO
 import img2pdf
+import warnings
 
 
 class jumpplus_downloader:
@@ -13,7 +14,9 @@ class jumpplus_downloader:
         self.h = 1200
         self.w = 760
 
-    def auto_list_download(self, url, next=False, sleeptime=20, pdfConversion=True):
+    def auto_list_download(self, url, next=False, sleeptime=2, pdfConversion=True):
+        if next == True:
+            warnings.warn("auto_list_downloadの第2引数trueは非推奨です。falseを指定してください。")
         self.json_download(url)
         self.file = 0
         if os.path.isdir(self.list["readableProduct"]["title"]) != True:
@@ -80,12 +83,10 @@ class jumpplus_downloader:
         counterY = 0
         for wdx in buff:
             for ldx in wdx:
-                print(str(counterY))
                 self.converted_img.paste(
                     ldx, (int(width/4*counterX), int(height/4*counterY)))
                 counterX += 1
             counterX = 0
-            print("Current Y Counter:"+str(counterY))
             counterY += 1
 
     def output(self, file="./"):
