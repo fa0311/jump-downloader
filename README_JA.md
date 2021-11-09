@@ -23,7 +23,7 @@ include('lib/jumpplus_downloader.php');
 
 ```php
 $instance = new jumpplus_downloader();
-$instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true, 1); //URL, 次の話をダウンロードするか(非推奨), 遅延(sec)
+$instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true, 1); //URL, 次の話をダウンロードするか, 遅延(sec)
 ```
 
 # Python

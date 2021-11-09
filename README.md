@@ -23,7 +23,7 @@ $ apt-get install php7.0-gd
 include('lib/jumpplus_downloader.php');
 
 $instance = new jumpplus_downloader();
-$instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true, 1); //URL, Download next episode(deprecated), Delay(sec)
+$instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325021865", true, 1); //URL, Download next episode, Delay(sec)
 ```
 
 # Python

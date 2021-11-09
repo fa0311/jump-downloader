@@ -17,16 +17,13 @@ class jumppuls_downloader
     }
 
 
-    public function auto_list_download($url, $next = false, $sleep = 2)
+    public function auto_list_download($url, $next = false, $sleep = 0)
     {
-        if ($next) {
-            trigger_error("auto_list_downloadの第2引数trueは非推奨です。falseを指定してください。", E_USER_WARNING);
-        }
         $this->json_download($url);
         if (!file_exists($this->list["readableProduct"]["title"])) {
             mkdir($this->list["readableProduct"]["title"], 0755);
         }
-        if ($this->list["readableProduct"]["pageStructure"] === null) {
+        if($this->list["readableProduct"]["pageStructure"] === null){
             return;
         }
         foreach ($this->list["readableProduct"]["pageStructure"]["pages"] as $i => $page) {
