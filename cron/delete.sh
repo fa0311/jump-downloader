@@ -1,0 +1,1 @@
+find ./ -type d | grep -v "lib" | xargs rm -rf
