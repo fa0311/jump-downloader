@@ -36,7 +36,7 @@ $instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325
 ```
 
 # Python
-This is not supported
+
 ## Installation
 
 ```console
