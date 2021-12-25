@@ -28,19 +28,24 @@ class jumpplus_downloader:
                 self.w = page["width"]
                 self.download(page["src"], False)
                 self.processing()
-                self.output("./"+self.list["readableProduct"]["title"]+"/")
+                self.output("./" + self.list["readableProduct"]["title"] + "/")
         if pdfConversion:
             self.convertToPdf()
-        if self.list["readableProduct"]["nextReadableProductUri"] != None and next == True:
+        if (
+            self.list["readableProduct"]["nextReadableProductUri"] != None
+            and next == True
+        ):
             self.auto_list_download(
-                self.list["readableProduct"]["nextReadableProductUri"], True)
+                self.list["readableProduct"]["nextReadableProductUri"], True
+            )
 
     def json_download(self, url):
         # Counterfeit User agent for absolutely successfully connection.
         session = requests.session()
         headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"}
-        json_data = session.get(url+".json", headers=headers).text
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+        }
+        json_data = session.get(url + ".json", headers=headers).text
         self.list = json.loads(json_data)
 
     def json_localread(self, filepath):
@@ -55,14 +60,15 @@ class jumpplus_downloader:
         else:
             session = requests.session()
             headers = {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"}
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+            }
             self.img = requests.get(url)
 
     def processing(self):
         readImage = Image.open(BytesIO(self.img.content))
         imageSize = readImage.size
-        width = imageSize[0]-24
-        height = imageSize[1]-16
+        width = imageSize[0] - 24
+        height = imageSize[1] - 16
         buff = []
         counterX = 0
         counterY = 0
@@ -70,8 +76,14 @@ class jumpplus_downloader:
         for wx in range(4):
             inbuff = []
             for lx in range(4):
-                cropped = readImage.crop(box=(
-                    width/4*counterX, height/4*counterY, width/4*(counterX+1), height/4*(counterY+1)))
+                cropped = readImage.crop(
+                    box=(
+                        width / 4 * counterX,
+                        height / 4 * counterY,
+                        width / 4 * (counterX + 1),
+                        height / 4 * (counterY + 1),
+                    )
+                )
                 inbuff.append(cropped)
                 counterY += 1
             buff.append(inbuff)
@@ -84,30 +96,37 @@ class jumpplus_downloader:
         for wdx in buff:
             for ldx in wdx:
                 self.converted_img.paste(
-                    ldx, (int(width/4*counterX), int(height/4*counterY)))
+                    ldx, (int(width / 4 * counterX), int(height / 4 * counterY))
+                )
                 counterX += 1
             counterX = 0
             counterY += 1
 
     def output(self, file="./"):
-        self.converted_img.save(file+str(self.file)+".png")
+        self.converted_img.save(file + str(self.file) + ".png")
         self.file += 1
 
     def convertToPdf(self):
-        directory = "./"+self.list["readableProduct"]["title"]+"/"
+        directory = "./" + self.list["readableProduct"]["title"] + "/"
         sourceDir = os.listdir(directory)
         imgcount = 0
         img = []
         filextend = sourceDir[0].split(".")
-        filextend = (str(".")+str(filextend[1]))
+        filextend = str(".") + str(filextend[1])
         for images in sourceDir:
             img.append(directory + str(imgcount) + filextend)
-            imgcount = imgcount+1
-        with open("./"+self.list["readableProduct"]["title"]+".pdf", "wb") as f:
+            imgcount = imgcount + 1
+        with open("./" + self.list["readableProduct"]["title"] + ".pdf", "wb") as f:
             f.write(img2pdf.convert(img))
 
     # A simple Json Dumper for debugging.
     def dumpSimplifiedJson(self, jsObject):
         f = open("JSON.json", "w")
-        json.dump(jsObject, f, ensure_ascii=False, indent=4,
-                  sort_keys=True, separators=(',', ': '))
+        json.dump(
+            jsObject,
+            f,
+            ensure_ascii=False,
+            indent=4,
+            sort_keys=True,
+            separators=(",", ": "),
+        )
