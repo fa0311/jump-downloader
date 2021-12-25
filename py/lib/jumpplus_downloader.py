@@ -13,10 +13,28 @@ class jumpplus_downloader:
         self.file = 0
         self.h = 1200
         self.w = 760
+        self.session = requests.session()
 
-    def auto_list_download(self, url, next=False, sleeptime=2, pdfConversion=True):
-        if next == True:
-            warnings.warn("auto_list_downloadの第2引数trueは非推奨です。falseを指定してください。")
+    def __get_headers(self):
+        return {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+        }
+
+    def login(self, email_address, password, return_location_path="/"):
+        data = {
+            "email_address": email_address,
+            "password": password,
+            "return_location_path": return_location_path,
+        }
+        headers = {"x-requested-with": "XMLHttpRequest"}
+        self.content = self.session.post(
+            "https://shonenjumpplus.com/user_account/login",
+            headers=dict(self.__get_headers(), **headers),
+            data=data,
+        ).content
+        return self
+
+    def auto_list_download(self, url, sleeptime=2, pdfConversion=True):
         self.json_download(url)
         self.file = 0
         if os.path.isdir(self.list["readableProduct"]["title"]) != True:
@@ -31,21 +49,10 @@ class jumpplus_downloader:
                 self.output("./" + self.list["readableProduct"]["title"] + "/")
         if pdfConversion:
             self.convertToPdf()
-        if (
-            self.list["readableProduct"]["nextReadableProductUri"] != None
-            and next == True
-        ):
-            self.auto_list_download(
-                self.list["readableProduct"]["nextReadableProductUri"], True
-            )
 
     def json_download(self, url):
         # Counterfeit User agent for absolutely successfully connection.
-        session = requests.session()
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-        }
-        json_data = session.get(url + ".json", headers=headers).text
+        json_data = self.session.get(url + ".json", headers=self.__get_headers()).text
         self.list = json.loads(json_data)
 
     def json_localread(self, filepath):
@@ -58,11 +65,7 @@ class jumpplus_downloader:
             print("Emulating Download : " + url)
             self.img = url
         else:
-            session = requests.session()
-            headers = {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-            }
-            self.img = requests.get(url)
+            self.img = self.session.get(url, headers=self.__get_headers())
 
     def processing(self):
         readImage = Image.open(BytesIO(self.img.content))
