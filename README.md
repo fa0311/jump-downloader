@@ -8,14 +8,12 @@ For Educational Purposes Only.
 Made on intent to read without depending on the Internet environment.  
 Please DO NOT archive the manga or publish it to a third party, upload.
 
-# cron
+# Support
 
-This is a cron that deletes comics downloaded at 0:00:00.
-Be sure to register.
-
-```cron
-0 0 * * * cd php && sh delete.sh
-```
+|            |  PHP  | Python |
+| ---------- | ----- | ------ |
+|  Download  | o     | o      |
+|  Login     | x     | o      |
 
 # PHP
 
@@ -41,9 +39,7 @@ $instance->auto_list_download("https://shonenjumpplus.com/episode/10833519556325
 
 ```console
 $ git clone https://github.com/fa0311/jumpplus-downloader.git
-
 $ cd jumpplus-downloader/py
-
 $ sudo pip3 install -r requirements.txt
 ```
 
@@ -59,6 +55,15 @@ from lib.jumpplus_downloader import jumpplus_downloader
 
 jpd = jumpplus_downloader()
 jpd.auto_list_download(url="https://shonenjumpplus.com/episode/10833519556325021865", sleeptime=20, next=True, pdfConversion=True)
+```
+
+# cron
+
+This is a cron that deletes comics downloaded at 0:00:00.
+Be sure to register.
+
+```cron
+0 0 * * * cd php && sh delete.sh
 ```
 
 # License
