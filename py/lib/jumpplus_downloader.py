@@ -6,6 +6,7 @@ from PIL import Image
 from io import BytesIO
 import img2pdf
 import warnings
+import math
 
 
 class jumpplus_downloader:
@@ -13,6 +14,8 @@ class jumpplus_downloader:
         self.file = 0
         self.h = 1200
         self.w = 760
+        self.h_marge = 4
+        self.w_marge = 6
         self.session = requests.session()
 
     def __get_headers(self):
@@ -44,6 +47,7 @@ class jumpplus_downloader:
             if page["type"] == "main":
                 self.h = page["height"]
                 self.w = page["width"]
+                self.w_marge = page["width"] / 4 % 8
                 self.download(page["src"], False)
                 self.processing()
                 self.output("./" + self.list["readableProduct"]["title"] + "/")
@@ -70,8 +74,8 @@ class jumpplus_downloader:
     def processing(self):
         readImage = Image.open(BytesIO(self.img.content))
         imageSize = readImage.size
-        width = imageSize[0] - 24
-        height = imageSize[1] - 16
+        width = math.floor(imageSize[0] / 4 - self.w_marge);
+        height = math.floor(imageSize[1] / 4 - self.h_marge);
         buff = []
         counterX = 0
         counterY = 0
@@ -81,10 +85,10 @@ class jumpplus_downloader:
             for lx in range(4):
                 cropped = readImage.crop(
                     box=(
-                        width / 4 * counterX,
-                        height / 4 * counterY,
-                        width / 4 * (counterX + 1),
-                        height / 4 * (counterY + 1),
+                        width * counterX,
+                        height * counterY,
+                        width * (counterX + 1),
+                        height  * (counterY + 1),
                     )
                 )
                 inbuff.append(cropped)
@@ -93,13 +97,13 @@ class jumpplus_downloader:
             counterX += 1
             counterY = 0
 
-        self.converted_img = Image.new("RGB", (int(width), int(height)))
+        self.converted_img = Image.new("RGB", (imageSize[0], imageSize[1]))
         counterX = 0
         counterY = 0
         for wdx in buff:
             for ldx in wdx:
                 self.converted_img.paste(
-                    ldx, (int(width / 4 * counterX), int(height / 4 * counterY))
+                    ldx, (int(width * counterX), int(height * counterY))
                 )
                 counterX += 1
             counterX = 0

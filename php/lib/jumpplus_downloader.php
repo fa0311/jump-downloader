@@ -60,8 +60,8 @@ class jumppuls_downloader
     public function processing()
     {
         $this->dst_image = imagecreatetruecolor($this->w - $this->w_marge * 4, $this->h - $this->h_marge * 4);
-        $width = $this->w / 4 - $this->w_marge;
-        $height = $this->h / 4 - $this->h_marge;
+        $width = floor($this->w / 4 - $this->w_marge);
+        $height = floor($this->h / 4 - $this->h_marge);
         for ($i = 0; $i <= 3; $i++) {
             for ($ii = 0; $ii <= 3; $ii++) {
                 imagecopyresampled($this->dst_image, $this->img, $width * $i, $height * $ii, $width * $ii, $height * $i, $width, $height, $width, $height);
