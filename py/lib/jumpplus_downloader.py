@@ -14,8 +14,6 @@ class jumpplus_downloader:
         self.file = 0
         self.h = 1200
         self.w = 760
-        self.h_marge = 4
-        self.w_marge = 6
         self.session = requests.session()
 
     def __get_headers(self):
@@ -47,7 +45,6 @@ class jumpplus_downloader:
             if page["type"] == "main":
                 self.h = page["height"]
                 self.w = page["width"]
-                self.w_marge = page["width"] / 4 % 8
                 self.download(page["src"], False)
                 self.processing()
                 self.output("./" + self.list["readableProduct"]["title"] + "/")
@@ -74,8 +71,10 @@ class jumpplus_downloader:
     def processing(self):
         readImage = Image.open(BytesIO(self.img.content))
         imageSize = readImage.size
-        width = math.floor(imageSize[0] / 4 - self.w_marge);
-        height = math.floor(imageSize[1] / 4 - self.h_marge);
+        divideNum = 4
+        multiple = 8
+        width =  (math.floor(float(imageSize[0]) / (divideNum * multiple)) * multiple);
+        height =  (math.floor(float(imageSize[1]) / (divideNum * multiple)) * multiple);
         buff = []
         counterX = 0
         counterY = 0
@@ -97,7 +96,7 @@ class jumpplus_downloader:
             counterX += 1
             counterY = 0
 
-        self.converted_img = Image.new("RGB", (imageSize[0], imageSize[1]))
+        self.converted_img = readImage.copy()
         counterX = 0
         counterY = 0
         for wdx in buff:
