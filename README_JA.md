@@ -1,6 +1,6 @@
 # jumpplus_downloader
 
-[English](./README.md)
+[English](./README.md)　[For Windows](https://github.com/fa0311/jump-downloader-for-windows)
 
 ## 注意
 
@@ -10,10 +10,10 @@
 
 # サポート
 
-|                |  PHP  | Python |
-| -------------- | ----- | ------ |
-|  ダウンロード  | o     | o      |
-|  ログイン      | x     | o      |
+|              | PHP | Python |
+| ------------ | --- | ------ |
+| ダウンロード | o   | o      |
+| ログイン     | x   | o      |
 
 # PHP
 
