@@ -10,11 +10,12 @@ import math
 
 
 class jumpplus_downloader:
-    def __init__(self):
+    def __init__(self, dir="./"):
         self.file = 0
         self.h = 1200
         self.w = 760
         self.session = requests.session()
+        self.dir=dir
 
     def __get_headers(self):
         return {
@@ -28,18 +29,18 @@ class jumpplus_downloader:
             "return_location_path": return_location_path,
         }
         headers = {"x-requested-with": "XMLHttpRequest"}
-        self.content = self.session.post(
+        self.response = self.session.post(
             "https://shonenjumpplus.com/user_account/login",
             headers=dict(self.__get_headers(), **headers),
             data=data,
-        ).content
+        )
         return self
 
     def auto_list_download(self, url, sleeptime=2, pdfConversion=True):
         self.json_download(url)
         self.file = 0
-        if os.path.isdir(self.list["readableProduct"]["title"]) != True:
-            os.mkdir(self.list["readableProduct"]["title"])
+        if os.path.isdir(self.dir + self.list["readableProduct"]["title"]) != True:
+            os.mkdir(self.dir + self.list["readableProduct"]["title"])
         for page in self.list["readableProduct"]["pageStructure"]["pages"]:
             time.sleep(sleeptime)
             if page["type"] == "main":
@@ -47,7 +48,7 @@ class jumpplus_downloader:
                 self.w = page["width"]
                 self.download(page["src"], False)
                 self.processing()
-                self.output("./" + self.list["readableProduct"]["title"] + "/")
+                self.output(self.dir + self.list["readableProduct"]["title"] + "/")
         if pdfConversion:
             self.convertToPdf()
 
@@ -73,8 +74,8 @@ class jumpplus_downloader:
         imageSize = readImage.size
         divideNum = 4
         multiple = 8
-        width =  (math.floor(float(imageSize[0]) / (divideNum * multiple)) * multiple);
-        height =  (math.floor(float(imageSize[1]) / (divideNum * multiple)) * multiple);
+        width = math.floor(float(imageSize[0]) / (divideNum * multiple)) * multiple
+        height = math.floor(float(imageSize[1]) / (divideNum * multiple)) * multiple
         buff = []
         counterX = 0
         counterY = 0
@@ -87,7 +88,7 @@ class jumpplus_downloader:
                         width * counterX,
                         height * counterY,
                         width * (counterX + 1),
-                        height  * (counterY + 1),
+                        height * (counterY + 1),
                     )
                 )
                 inbuff.append(cropped)
@@ -108,12 +109,12 @@ class jumpplus_downloader:
             counterX = 0
             counterY += 1
 
-    def output(self, file="./"):
-        self.converted_img.save(file + str(self.file) + ".png")
+    def output(self, dir):
+        self.converted_img.save(dir + str(self.file) + ".png")
         self.file += 1
 
     def convertToPdf(self):
-        directory = "./" + self.list["readableProduct"]["title"] + "/"
+        directory = self.dir + self.list["readableProduct"]["title"] + "/"
         sourceDir = os.listdir(directory)
         imgcount = 0
         img = []
@@ -122,7 +123,7 @@ class jumpplus_downloader:
         for images in sourceDir:
             img.append(directory + str(imgcount) + filextend)
             imgcount = imgcount + 1
-        with open("./" + self.list["readableProduct"]["title"] + ".pdf", "wb") as f:
+        with open(self.dir + self.list["readableProduct"]["title"] + ".pdf", "wb") as f:
             f.write(img2pdf.convert(img))
 
     # A simple Json Dumper for debugging.
