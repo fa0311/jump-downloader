@@ -1,6 +1,6 @@
 # jumpplus_downloader
 
-[日本語](./README_JA.md)
+[日本語](./README_JA.md)　[For Windows](https://github.com/fa0311/jump-downloader-for-windows)
 
 ## About
 
@@ -10,10 +10,10 @@ Please DO NOT archive the manga or publish it to a third party, upload.
 
 # Support
 
-|            |  PHP  | Python |
-| ---------- | ----- | ------ |
-|  Download  | o     | o      |
-|  Login     | x     | o      |
+|          | PHP | Python |
+| -------- | --- | ------ |
+| Download | o   | o      |
+| Login    | x   | o      |
 
 # PHP
 
