@@ -5,7 +5,6 @@ import time
 from PIL import Image
 from io import BytesIO
 import img2pdf
-import warnings
 import math
 
 
