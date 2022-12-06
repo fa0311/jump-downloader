@@ -7,7 +7,7 @@ colorama==0.4.5
 future==0.18.2
 idna==3.3
 img2pdf==0.4.4
-lxml==4.9.0
+lxml==4.9.1
 mypy-extensions==0.4.3
 packaging==21.3
 pathspec==0.9.0
