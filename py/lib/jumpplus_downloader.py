@@ -40,18 +40,19 @@ class jumpplus_downloader:
         self.json_download(url)
         self.file = 0
         retitle = re.sub(r'[\\|/|:|?|.|"|<|>|\|]', '', self.list["readableProduct"]["title"])
-        if os.path.isdir(self.dir + retitle) != True:
+        if not os.path.isdir(self.dir + retitle):
             os.mkdir(self.dir + retitle)
-        for page in self.list["readableProduct"]["pageStructure"]["pages"]:
-            time.sleep(sleeptime)
-            if page["type"] == "main":
-                self.h = page["height"]
-                self.w = page["width"]
-                self.download(page["src"], False)
-                self.processing()
-                self.output(self.dir + retitle + "/", zero_padding=zero_padding)
-        if pdfConversion:
-            self.convertToPdf(self.dir + retitle + "/")
+        if self.list["readableProduct"]["pageStructure"]:
+            for page in self.list["readableProduct"]["pageStructure"]["pages"]:
+                time.sleep(sleeptime)
+                if page["type"] == "main":
+                    self.h = page["height"]
+                    self.w = page["width"]
+                    self.download(page["src"], False)
+                    self.processing()
+                    self.output(self.dir + retitle + "/", zero_padding=zero_padding)
+            if pdfConversion:
+                self.convertToPdf(self.dir + retitle + "/")
 
     def json_download(self, url):
         # Counterfeit User agent for absolutely successfully connection.
