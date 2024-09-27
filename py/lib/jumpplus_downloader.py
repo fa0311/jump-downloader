@@ -1,13 +1,15 @@
-import requests
-import json
-import os
-import time
-from PIL import Image
-from io import BytesIO
-import img2pdf
-import math
-import re
 import glob
+import json
+import math
+import os
+import re
+import time
+from io import BytesIO
+
+import img2pdf
+import requests
+from PIL import Image
+
 
 class jumpplus_downloader:
     def __init__(self, dir="./"):
@@ -36,10 +38,14 @@ class jumpplus_downloader:
         )
         return self
 
-    def auto_list_download(self, url, sleeptime=2, pdfConversion=True, zero_padding=True):
+    def auto_list_download(
+        self, url, sleeptime=2, pdfConversion=True, zero_padding=True
+    ):
         self.json_download(url)
         self.file = 0
-        retitle = re.sub(r'[\\|/|:|?|.|"|<|>|\|]', '', self.list["readableProduct"]["title"])
+        retitle = re.sub(
+            r'[\\|/|:|?|.|"|<|>|\|]', "", self.list["readableProduct"]["title"]
+        )
         if not os.path.isdir(self.dir + retitle):
             os.mkdir(self.dir + retitle)
         if self.list["readableProduct"]["pageStructure"]:
@@ -111,7 +117,7 @@ class jumpplus_downloader:
             counterX = 0
             counterY += 1
 
-    def output(self, dir,zero_padding=True):
+    def output(self, dir, zero_padding=True):
         file = str(self.file)
         if zero_padding:
             index = 1
@@ -124,7 +130,11 @@ class jumpplus_downloader:
         self.file += 1
 
     def convertToPdf(self, dir):
-        img = [i.replace("\\","/") for i in glob.glob(glob.escape(dir) + "*") if not i.endswith(".pdf")]
+        img = [
+            i.replace("\\", "/")
+            for i in glob.glob(glob.escape(dir) + "*")
+            if not i.endswith(".pdf")
+        ]
         with open(dir + "output.pdf", "wb") as f:
             f.write(img2pdf.convert(img))
 
