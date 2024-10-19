@@ -1,4 +1,5 @@
 import glob
+import html
 import json
 import math
 import os
@@ -62,8 +63,11 @@ class jumpplus_downloader:
 
     def json_download(self, url):
         # Counterfeit User agent for absolutely successfully connection.
-        json_data = self.session.get(url + ".json", headers=self.__get_headers()).text
-        self.list = json.loads(json_data)
+        text = self.session.get(url, headers=self.__get_headers()).text
+        data = re.search(
+            r"<script id='episode-json' type='text/json' data-value='(.*?)'>", text
+        )
+        self.list = json.loads(html.unescape(data.group(1)))
 
     def json_localread(self, filepath):
         with open(filepath) as json_file:
